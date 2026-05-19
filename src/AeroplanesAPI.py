@@ -1,20 +1,27 @@
-from src.API_request import NominatimAPI, OpenSkyAPI
 import os
+
 from dotenv import load_dotenv
+
 from src.Aeroplane import Aeroplane
+from src.API_request import NominatimAPI, OpenSkyAPI
 
 load_dotenv()
 
 
-class AeroplanesAPI():
+class AeroplanesAPI:
     def __init__(self) -> None:
         self.nominatim = NominatimAPI()
         self.opensky = OpenSkyAPI()
 
-    def get_aeroplanes(self, country_name:str) -> list|None:
+    def get_aeroplanes(self, country_name: str) -> list | None:
         url_geo = f"https://nominatim.openstreetmap.org/search?country={country_name}&format=json"
         raw_geo = self.nominatim.request(url_geo, key=None)
         coordinates = self.nominatim.response(raw_geo)
+        if not coordinates:
+            print(
+                f"Ошибка: Страна '{country_name}' не найдена в базе данных координат."
+            )
+            return None
         print(coordinates)
         lat = coordinates["lat"]
         lon = coordinates["lon"]
@@ -31,7 +38,10 @@ class AeroplanesAPI():
         planes = self.opensky.response(raw_sky)
         return planes
 
-def filter_aeroplanes(aeroplanes:list[Aeroplane], filter_words: list[str]) -> list[Aeroplane]:
+
+def filter_aeroplanes(
+    aeroplanes: list[Aeroplane], filter_words: list[str]
+) -> list[Aeroplane]:
     if not filter_words:
         return aeroplanes
 
@@ -41,36 +51,51 @@ def filter_aeroplanes(aeroplanes:list[Aeroplane], filter_words: list[str]) -> li
             user_request.append(plane)
     return user_request
 
-def get_aeroplanes_by_altitude(aeroplanes:list[Aeroplane], altitude_range: str) -> list[Aeroplane]:
-    if '-' in altitude_range:
-        parts = altitude_range.split('-')
+
+def get_aeroplanes_by_altitude(
+    aeroplanes: list[Aeroplane], altitude_range: str
+) -> list[Aeroplane]:
+    if "-" in altitude_range:
+        parts = altitude_range.split("-")
     else:
         parts = altitude_range.split()
 
     parts = [p.strip() for p in parts if p.strip()]
 
     if len(parts) != 2:
-        print("Ошибка: диапазон высот введен некорректно. Фильтрация по высоте пропущена.")
+        print(
+            "Ошибка: диапазон высот введен некорректно. Фильтрация по высоте пропущена."
+        )
         return aeroplanes
 
     min_alt = float(parts[0])
     max_alt = float(parts[1])
     user_request_planes = []
     for plane in aeroplanes:
-        if plane.baro_altitude is not None and min_alt <= plane.baro_altitude <= max_alt:
+        if (
+            plane.baro_altitude is not None
+            and min_alt <= plane.baro_altitude <= max_alt
+        ):
             user_request_planes.append(plane)
     return user_request_planes
 
-def sort_aeroplanes(aeroplanes: list[Aeroplane])-> list[Aeroplane] :
-    request_ranged_aeroplanes = sorted(aeroplanes, key=lambda plane:plane.baro_altitude)
-    return request_ranged_aeroplanes
 
-def top_aeroplanes(aeroplanes: list[Aeroplane], top_n:int) -> list[Aeroplane]:
+def sort_aeroplanes(
+    aeroplanes: list[Aeroplane], by_criterion: str = "altitude"
+) -> list[Aeroplane]:
+    if by_criterion == "velocity":
+        return sorted(
+            aeroplanes,
+            key=lambda plane: plane.velocity if plane.velocity is not None else 0,
+            reverse=True,
+        )
+    else:
+        return sorted(aeroplanes, reverse=True)
+
+
+def top_aeroplanes(aeroplanes: list[Aeroplane], top_n: int) -> list[Aeroplane]:
     user_request_list = aeroplanes[:top_n]
     return user_request_list
-
-
-
 
 
 # if __name__ == "__main__":

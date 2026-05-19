@@ -1,0 +1,26 @@
+[
+    {
+        "callsign": "ROU1902 ",
+        "origin_country": "Canada",
+        "velocity": 251.58,
+        "baro_altitude": 10058.4
+    },
+    {
+        "callsign": "ACA256  ",
+        "origin_country": "Canada",
+        "velocity": 139.76,
+        "baro_altitude": 2065.02
+    },
+    {
+        "callsign": "MCB07   ",
+        "origin_country": "Canada",
+        "velocity": 131.16,
+        "baro_altitude": 5151.12
+    },
+    {
+        "callsign": "CGNWG   ",
+        "origin_country": "Canada",
+        "velocity": 63.11,
+        "baro_altitude": 396.24
+    }
+]
