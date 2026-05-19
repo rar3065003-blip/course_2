@@ -1,0 +1,18 @@
+Index: main.py
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+># api = AeroplanesAPI()\n#\n# # Получение информации о самолетах с opensky-network.org\n# aeroplanes = api.get_aeroplanes(‘Spain’)\n#\n# # Преобразование набора данных в список объектов\n# aeroplanes = Aeroplane.cast_to_object_list(aeroplanes)\n#\n# # Пример работы контструктора класса с одним самолетом\n# aeroplane = Aeroplane(\"UAL1621\", \"United States\", 268.79, 10203.18)\n#\n# # Сохранение информации в файл\n# json_saver = JSONSaver()\n# json_saver.add_aeroplane(vacancy)\n# json_saver.delete_aeroplane(vacancy)\n#\n# # Функция для взаимодействия с пользователем\n# def user_interaction():\n#     country = input(\"Введите название страны: \")\n#     top_n = int(input(\"Введите количество самолетов для вывода в топ N: \"))\n#     filter_words = input(\"Введите названия стран для фильтрации по стране регистрации: \").split()\n#     altitude_range = input(\"Введите диапазон высот полета: \") # Пример: 100000 - 150000\n#\n#     filtered_aeroplanes = filter_aeroplanes(aeroplanes, filter_words)\n#\n#     ranged_aeroplanes = get_aeroplanes_by_altitude(aeroplanes, altitude_range)\n#\n#     sorted_aeroplanes = sort_aeroplanes(ranged_aeroplanes)\n#     top_aeroplanes = get_top_aeroplanes(sorted_aeroplanes, top_n)\n#     print_aeroplanes(top_aeroplanes)\n\n\nif __name__ == \"__main__\":\n    # user_interaction()
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/main.py b/main.py
+--- a/main.py	(revision 2f16defcdac4cc0498d4a5b0e86faa6499be030b)
++++ b/main.py	(date 1779190691810)
+@@ -31,4 +31,4 @@
+ 
+ 
+ if __name__ == "__main__":
+-    # user_interaction()
+\ No newline at end of file
++    user_interaction()
+\ No newline at end of file
