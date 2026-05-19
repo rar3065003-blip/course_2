@@ -1,6 +1,7 @@
 from src.API_request import NominatimAPI, OpenSkyAPI
 import os
 from dotenv import load_dotenv
+from src.Aeroplane import Aeroplane
 
 load_dotenv()
 
@@ -29,15 +30,46 @@ class AeroplanesAPI():
         planes = self.opensky.response(raw_sky)
         return planes
 
+def filter_aeroplanes(aeroplanes:list[Aeroplane], filter_words: list[str]) -> list[Aeroplane]:
+    user_request = []
+    for plane in aeroplanes:
+        if plane.origin_country in filter_words:
+            user_request.append(plane)
+    return user_request
+
+def get_aeroplanes_by_altitude(aeroplanes:list[Aeroplane], altitude_range: str) -> list[Aeroplane]:
+    parts = altitude_range.split('-')
+    min_alt = float(parts[0])
+    max_alt = float(parts[1])
+    user_request_planes = []
+    for plane in aeroplanes:
+        if plane.baro_altitude is not None and min_alt <= plane.baro_altitude <= max_alt:
+            user_request_planes.append(plane)
+    return user_request_planes
+
+def sort_aeroplanes(aeroplanes: list[Aeroplane])-> list[Aeroplane] :
+    request_ranged_aeroplanes = sorted(aeroplanes, key=lambda plane:plane.baro_altitude)
+    return request_ranged_aeroplanes
+
+def get_top_aeroplanes(aeroplanes: list[Aeroplane], top_n:int) -> list[Aeroplane]:
+    user_request_list = aeroplanes[:top_n]
+    return user_request_list
+
+
+
+
 
 if __name__ == "__main__":
-    # 1. Создаем наш главный инструмент-диспетчер
     api = AeroplanesAPI()
+    # 1. Получаем сырые данные из интернета (как и раньше)
+    raw_planes = api.get_aeroplanes("Poland")
 
-    # 2. Вызываем метод для поиска самолетов над Испанией
-    # (Код сам внутри найдет координаты, создаст квадрат и сделает запрос к OpenSky)
-    result = api.get_aeroplanes("Spain")
+    # 2. Вызываем ТВОЙ метод для превращения их в объекты!
+    # Не забудь импортировать класс Aeroplane в этот файл
+    aeroplanes_objects = Aeroplane.cast_to_object_list(raw_planes)
 
-    # 3. Смотрим, что получилось
-    print("Итоговый список самолетов:")
-    print(result)
+    # 3. Давай выведем для проверки первый самолет из списка объектов
+    if aeroplanes_objects:
+        first_plane = aeroplanes_objects[0]
+        print("Данные первого объекта-самолета:")
+        print(f"Рейс: {first_plane.callsign}, Страна: {first_plane.origin_country}, Скорость: {first_plane.velocity}")

@@ -5,14 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="50353970-c327-49e4-b234-f08bed46653e" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.env" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/API_request.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/AeroplanesAPI.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/course_2.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/course_2.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Aeroplane.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/JSON_operations.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/poetry.lock" beforeDir="false" afterPath="$PROJECT_DIR$/poetry.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pyproject.toml" beforeDir="false" afterPath="$PROJECT_DIR$/pyproject.toml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AeroplanesAPI.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/AeroplanesAPI.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
